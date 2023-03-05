@@ -1,0 +1,20 @@
+# Github directory
+
+mkdir GithubRepo_1 GithubRepo2 Githubrepo3
+
+# use git clone https://github.com/your_url within each directory/repo made
+
+#Push images to github #docker image push <image name:version>
+
+docker image push cblackii/ubuntu-with-python:1.0
+
+# docker run -d -p 8080:80 -v $(pwd):/path/in/container <image name:version> <text> <text>
+# docker run -d -p 8081:80
+# docker run -d -p 8082:80
+
+#verify we can access # docker exec -it <first 3 characters of container ID> bash
+
+# run docker ps to see running containers 
+
+
+
