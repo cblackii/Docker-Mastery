@@ -1,0 +1,6 @@
+# Build Docker Image
+
+#example docker built -t <your_github_userename/custom_name:version . >
+
+docker build -t cblackii/unbuntu-with-python:1.0 .
+

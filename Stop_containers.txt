@@ -1,0 +1,3 @@
+# Stop running containers
+
+docker stop <first 3 characters of container ID
