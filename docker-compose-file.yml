@@ -1,0 +1,36 @@
+#docker compose stack
+
+version: '3'
+
+services:
+  redis:
+    image: redis
+    deploy:
+      replicas: 4
+      placement:
+        constraints:
+          - node.role == worker
+    ports:
+      - "6379:6379"
+      
+  postgres:
+    image: postgres
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+      
+  apache:
+    image: httpd
+    deploy:
+      replicas: 10
+      placement:
+        constraints:
+          - node.role == worker
+    ports:
+      - "8080:80"
