@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: shared-service
+  name: nginx-shared-service
 spec:
   selector:
     app: nginx
