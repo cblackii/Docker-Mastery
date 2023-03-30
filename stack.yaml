@@ -1,0 +1,54 @@
+apiVersion: apps/v1  # API version for Deployment resource
+kind: Deployment  # type of resource
+metadata:
+  name: stack-deployment  # name of deployment
+spec:
+  replicas: 15  # number of replicas to create
+  selector:
+    matchLabels:
+      app: stack  # label selector to match pods to deployment
+  template:
+    metadata:
+      labels:
+        app: stack  # label applied to pods created by deployment
+    spec:
+      containers:
+        - name: redis  # name of Redis container
+          image: redis  # Docker image to use for container
+          ports:
+            - containerPort: 6379  # port to expose on container
+        - name: postgres  # name of PostgreSQL container
+          image: postgres  # Docker image to use for container
+          ports:
+            - containerPort: 5432  # port to expose on container
+          env:
+            - name: POSTGRES_PASSWORD  # name of environment variable
+              value: password  # value for environment variable
+        - name: apache  # name of Apache container
+          image: httpd  # Docker image to use for container
+          ports:
+            - containerPort: 80  # port to expose on container
+  # rolling update strategy for deployment
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+---
+apiVersion: v1  # API version for Service resource
+kind: Service  # type of resource
+metadata:
+  name: stack-service  # name of service
+spec:
+  selector:
+    app: stack  # label selector to match pods to service
+  ports:
+    - name: redis  # name of Redis service port
+      port: 6379  # port to expose on service
+      targetPort: 6379  # port to forward traffic to on pods
+    - name: postgres  # name of PostgreSQL service port
+      port: 5432  # port to expose on service
+      targetPort: 5432  # port to forward traffic to on pods
+    - name: apache  # name of Apache service port
+      port: 80  # port to expose on service
+      targetPort: 80  # port to forward traffic to on pods
+  type: LoadBalancer  # type of service to create
